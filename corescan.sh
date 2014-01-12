@@ -32,8 +32,11 @@ echo "Removing the core dumps.."
 while read line
 do
 
-rm $line
+rm -f $line
 
 done < corerm.log
 
+echo "Cleaning up..."
+rm -f corefind.log
+rm -f corerm.log
 echo "Done!"
