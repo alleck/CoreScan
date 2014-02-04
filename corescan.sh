@@ -2,7 +2,7 @@
 
 echo "Finding core files for /home. This may take a while..."
 # find /home/fissionc/* -name core.{0..9}* >> corefind.log
-find /home/fissionc/test/ -name "core.[[:digit:]]*" >> corefind.log
+find /home*/* -name "core.[[:digit:]]*" >> corefind.log
 
 cp corefind.log coreLogs/$(date +%Y%m%d-%H%M)_corefind.log
 
