@@ -3,7 +3,6 @@
 echo "Finding core files for /home. This may take a while..."
 find /home*/* -type f -name "core.[[:digit:]]*" >> corefind.log
 
-mkdir 
 cp corefind.log /home/AcctSize/coreLogs/$(date +%Y%m%d-%H%M)_corefind.log
 
 echo "Removing the core dumps.."
