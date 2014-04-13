@@ -1,7 +1,7 @@
 ###----> corescan.sh <----###
 
 echo "Finding core files for /home. This may take a while..."
-find ./* -type f -name "core.[[:digit:]]*[[:digit:]]" >> corefind.log
+find /home*/* -type f -name "core.[[:digit:]]*[[:digit:]]" >> corefind.log
 
 cp corefind.log /home/AcctSize/coreLogs/$(date +%Y%m%d-%H%M)_corefind.log
 
