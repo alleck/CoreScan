@@ -9,8 +9,19 @@ echo -e "  \____/\___/|_|  \___\____/ \___\__,_|_| |_| \033[0m"
 
 ###----> corescan.sh <----###
 
+echo " "
 echo "Finding core files for /home. This may take a while..."
 
+
+
+
+if [ ! -d "/home/sscan/coreLogs" ]
+then
+mkdir /home/sscan/coreLogs
+chmod 755 /home/sscan/coreLogs
+fi
+ 
+fileCoreLog="$(date +%y%m%d%H%M)_corefind.log"
 
 
 ls -ld /home*/* | awk '{print $9}' > /var/log/dirs.source
@@ -25,21 +36,16 @@ while read dirs
 do
 
 echo -ne "$process \r"
-        find $dirs -type f -name "core.[[:digit:]]*[[:digit:]]" >> corefind.log
+        
+        find $dirs -type f -size +20M -name "core.[[:digit:]]*[[:digit:]]" >> corefind.log
+ 
+
+        
         process=$(bc -l <<< "scale = 2; $process + $proc2")
 
 
 done < /var/log/dirs.source
 
 
-cp corefind.log /home/AcctSize/coreLogs/$(date +%Y%m%d-%H%M)_corefind.log
-
-echo "Removing the core dumps.."
-while read line
-do
- rm -f $line
-done < corefind.log
-
-echo "Cleaning up..."
- rm -f corefind.log
-echo "Done!"
+cp corefind.log /home/sscan/coreLogs/$fileCoreLog
+echo "Results can be found in /home/sscan/coreLogs/"$fileCoreLog
